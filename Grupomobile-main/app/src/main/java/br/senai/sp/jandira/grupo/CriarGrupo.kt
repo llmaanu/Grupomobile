@@ -49,6 +49,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import br.senai.sp.jandira.grupo.ui.theme.DarkPrimaryPurple
 import br.senai.sp.jandira.grupo.ui.theme.LightAccent
 import br.senai.sp.jandira.grupo.ui.theme.lightpurple
+import br.senai.sp.jandira.grupo.ui.theme.white
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -71,14 +72,14 @@ fun CriarGrupoScreen() {
                             modifier = Modifier
                                 .size(62.dp))
                         Spacer(modifier = Modifier.width(8.dp))
-                        Text("Journey", color = Color(0xFFFFFFFF))
+                        Text("Journey", color = white)
                     }
                 },
                 navigationIcon = {
                     IconButton(onClick = {}) {
                         Icon(Icons.Default.Menu,
                             contentDescription = "Menu",
-                            tint = Color(0xFFB8BDFA)
+                            tint = LightAccent
                         )
                     }
                 },

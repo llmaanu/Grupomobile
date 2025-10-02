@@ -43,6 +43,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.filled.ArrowDropDown
 import br.senai.sp.jandira.grupo.ui.theme.DarkPrimaryPurple
 import br.senai.sp.jandira.grupo.ui.theme.PrimaryPurple
+import br.senai.sp.jandira.grupo.ui.theme.white
 
 data class Grupo(
     val nome: String,
@@ -68,7 +69,7 @@ fun MeusGruposScreen(){
                             modifier = Modifier
                                 .size(62.dp))
                         Spacer(modifier = Modifier.width(8.dp))
-                        Text("Journey", color = Color(0xFFFFFFFF))
+                        Text("Journey", color = white)
                     }
                 },
                 navigationIcon = {
@@ -113,11 +114,11 @@ fun MeusGruposScreen(){
                 Column (
                     modifier = Modifier.padding(16.dp)
                 ){  Text(text = "Meus Grupos",
-                    style = MaterialTheme.typography.headlineSmall.copy(color = Color.White)
+                    style = MaterialTheme.typography.headlineSmall.copy(color = white)
                 )
                     Spacer(Modifier.height(12.dp))
 
-                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) { //
+                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                         Button(
                             onClick = {},
                             colors = ButtonDefaults.buttonColors(containerColor = Color.White)
@@ -134,7 +135,7 @@ fun MeusGruposScreen(){
                         }
                         Button(
                             onClick = {},
-                            colors = ButtonDefaults.buttonColors(containerColor = Color.White)
+                            colors = ButtonDefaults.buttonColors(containerColor = white)
                         ) {
                             Icon(
                                 Icons.Default.ArrowDropDown,
