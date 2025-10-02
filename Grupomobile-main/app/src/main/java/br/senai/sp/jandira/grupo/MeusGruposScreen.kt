@@ -1,6 +1,7 @@
 package br.senai.sp.jandira.grupo
 
 
+import GrupoTheme
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -53,7 +54,7 @@ data class Grupo(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MeusGruposScreen(){
+fun MeusGruposScreen(onNavigateToCreate: () -> Unit){
     val grupos = listOf(
         Grupo("Medicina", "30 Membros (limite atingido)", android.R.drawable.ic_menu_info_details),
         Grupo("Desenvolvimento de Sistemas", "12 Membros", android.R.drawable.ic_menu_manage)
@@ -193,8 +194,18 @@ fun MeusGruposScreen(){
         }
     }
 
-@Preview(showBackground = true, showSystemUi = true)
+@Preview(showBackground = true, showSystemUi = true, name = "MeusGrupos - Claro")
 @Composable
-fun PreviewMeusGruposScreen(){
-        MeusGruposScreen()
+fun PreviewMeusGruposLight() {
+    GrupoTheme(darkTheme = false) {
+        MeusGruposScreen(onNavigateToCreate = {})
+    }
+}
+
+@Preview(showBackground = true, showSystemUi = true, name = "MeusGrupos - Escuro")
+@Composable
+fun PreviewMeusGruposDark() {
+    GrupoTheme(darkTheme = true) {
+        MeusGruposScreen(onNavigateToCreate = {})
+    }
 }

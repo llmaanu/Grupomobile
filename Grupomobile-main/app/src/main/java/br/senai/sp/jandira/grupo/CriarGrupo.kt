@@ -1,4 +1,5 @@
 package br.senai.sp.jandira.grupo
+import GrupoTheme
 import android.R.attr.fontWeight
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -54,7 +55,7 @@ import br.senai.sp.jandira.grupo.ui.theme.white
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CriarGrupoScreen() {
+fun CriarGrupoScreen(onNavigateBack: () -> Unit) {
 
     var nomeGrupo by remember { mutableStateOf("") }
     var areaEspecifica by remember { mutableStateOf("") }
@@ -272,9 +273,18 @@ fun CriarGrupoScreen() {
     }
 
 
-@Preview(showBackground = true, showSystemUi = true)
+@Preview(showBackground = true, showSystemUi = true, name = "CriarGrupo - Claro")
 @Composable
-fun PreviewCriarGrupo(){
-    CriarGrupoScreen()
+fun PreviewCriarGrupoLight() {
+    GrupoTheme(darkTheme = false) {
+        CriarGrupoScreen(onNavigateBack = {})
+    }
 }
 
+@Preview(showBackground = true, showSystemUi = true, name = "CriarGrupo - Escuro")
+@Composable
+fun PreviewCriarGrupoDark() {
+    GrupoTheme(darkTheme = true) {
+        CriarGrupoScreen(onNavigateBack = {})
+    }
+}
