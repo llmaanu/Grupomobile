@@ -1,6 +1,5 @@
 package br.senai.sp.jandira.grupo
-import GrupoTheme
-import android.R.attr.fontWeight
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -23,6 +22,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.DrawerState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -42,20 +42,30 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
 import br.senai.sp.jandira.grupo.ui.theme.DarkPrimaryPurple
+import br.senai.sp.jandira.grupo.ui.theme.GrupoTheme
 import br.senai.sp.jandira.grupo.ui.theme.LightAccent
+import br.senai.sp.jandira.grupo.ui.theme.PrimaryPurple
 import br.senai.sp.jandira.grupo.ui.theme.lightpurple
 import br.senai.sp.jandira.grupo.ui.theme.white
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CriarGrupoScreen(onNavigateBack: () -> Unit) {
+fun CriarGrupoScreen(
+    drawerState: DrawerState,
+    scope: CoroutineScope,
+    isDarkTheme: Boolean,
+    onThemeToggle: () -> Unit,
+    onNavigateBack: () -> Unit) {
+
 
     var nomeGrupo by remember { mutableStateOf("") }
     var areaEspecifica by remember { mutableStateOf("") }
@@ -77,7 +87,7 @@ fun CriarGrupoScreen(onNavigateBack: () -> Unit) {
                     }
                 },
                 navigationIcon = {
-                    IconButton(onClick = {}) {
+                    IconButton(onClick = { scope.launch { drawerState.open() }}) {
                         Icon(Icons.Default.Menu,
                             contentDescription = "Menu",
                             tint = LightAccent
@@ -85,7 +95,7 @@ fun CriarGrupoScreen(onNavigateBack: () -> Unit) {
                     }
                 },
                 actions = {
-                    IconButton(onClick = { }) {
+                    IconButton(onClick = onThemeToggle) {
                         Image(
                             painter = painterResource(id = R.drawable.lua),
                             contentDescription = "Tema",
@@ -135,7 +145,7 @@ fun CriarGrupoScreen(onNavigateBack: () -> Unit) {
                     verticalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
                     Button(
-                        onClick = {  },
+                        onClick = onNavigateBack,
                         colors = ButtonDefaults.buttonColors(
                             containerColor = LightAccent
                         ),
@@ -170,6 +180,8 @@ fun CriarGrupoScreen(onNavigateBack: () -> Unit) {
                         modifier = Modifier.fillMaxWidth(),
                         shape = RoundedCornerShape(50),
                         colors = OutlinedTextFieldDefaults.colors(
+                            unfocusedContainerColor = PrimaryPurple,
+                            focusedContainerColor = DarkPrimaryPurple,
                             focusedBorderColor = Color.White,
                             unfocusedBorderColor = Color.White,
                             focusedTextColor = Color.White,
@@ -193,6 +205,8 @@ fun CriarGrupoScreen(onNavigateBack: () -> Unit) {
                         modifier = Modifier.fillMaxWidth(),
                         shape = RoundedCornerShape(50),
                         colors = OutlinedTextFieldDefaults.colors(
+                            unfocusedContainerColor = PrimaryPurple,
+                            focusedContainerColor = DarkPrimaryPurple,
                             focusedBorderColor = Color.White,
                             unfocusedBorderColor = Color.White,
                             focusedTextColor = Color.White,
@@ -218,6 +232,8 @@ fun CriarGrupoScreen(onNavigateBack: () -> Unit) {
                         shape = RoundedCornerShape(50),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                         colors = OutlinedTextFieldDefaults.colors(
+                            unfocusedContainerColor = PrimaryPurple,
+                            focusedContainerColor = DarkPrimaryPurple,
                             focusedBorderColor = Color.White,
                             unfocusedBorderColor = Color.White,
                             focusedTextColor = Color.White,
@@ -240,6 +256,8 @@ fun CriarGrupoScreen(onNavigateBack: () -> Unit) {
                         modifier = Modifier.fillMaxWidth(),
                         shape = RoundedCornerShape(50),
                         colors = OutlinedTextFieldDefaults.colors(
+                            unfocusedContainerColor = PrimaryPurple,
+                            focusedContainerColor = DarkPrimaryPurple,
                             focusedBorderColor = Color.White,
                             unfocusedBorderColor = Color.White,
                             focusedTextColor = Color.White,
@@ -268,23 +286,19 @@ fun CriarGrupoScreen(onNavigateBack: () -> Unit) {
                 }
             }
 
-            }
         }
     }
-
-
-@Preview(showBackground = true, showSystemUi = true, name = "CriarGrupo - Claro")
-@Composable
-fun PreviewCriarGrupoLight() {
-    GrupoTheme(darkTheme = false) {
-        CriarGrupoScreen(onNavigateBack = {})
-    }
 }
-
-@Preview(showBackground = true, showSystemUi = true, name = "CriarGrupo - Escuro")
+@Preview(showSystemUi = true)
 @Composable
-fun PreviewCriarGrupoDark() {
-    GrupoTheme(darkTheme = true) {
-        CriarGrupoScreen(onNavigateBack = {})
+fun PreviewCriarGrupo() {
+    GrupoTheme {
+        CriarGrupoScreen(
+            drawerState = androidx.compose.material3.rememberDrawerState(androidx.compose.material3.DrawerValue.Closed),
+            scope = androidx.compose.runtime.rememberCoroutineScope(),
+            isDarkTheme = false,
+            onThemeToggle = {},
+            onNavigateBack = {}
+        )
     }
 }

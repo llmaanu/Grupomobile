@@ -8,7 +8,7 @@ val LightAccent = Color(0xFFB8BDFA)
 val BackgroundWhite = Color(0xFFFFFFFF)
 
 val lightpurple = Color(0xFFD9DCFC)
-
+val red = Color(0xFFF80C0C)
 
 
 val Purple80 = PrimaryPurple

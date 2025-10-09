@@ -1,7 +1,5 @@
 package br.senai.sp.jandira.grupo
 
-
-import GrupoTheme
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -38,13 +36,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material3.DrawerState
 import br.senai.sp.jandira.grupo.ui.theme.DarkPrimaryPurple
 import br.senai.sp.jandira.grupo.ui.theme.PrimaryPurple
 import br.senai.sp.jandira.grupo.ui.theme.white
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 data class Grupo(
     val nome: String,
@@ -54,7 +54,13 @@ data class Grupo(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MeusGruposScreen(onNavigateToCreate: () -> Unit){
+fun MeusGruposScreen(
+    drawerState: DrawerState,
+    scope: CoroutineScope,
+    isDarkTheme: Boolean,
+    onThemeToggle: () -> Unit,
+    onNavigateToCreate: () -> Unit
+){
     val grupos = listOf(
         Grupo("Medicina", "30 Membros (limite atingido)", android.R.drawable.ic_menu_info_details),
         Grupo("Desenvolvimento de Sistemas", "12 Membros", android.R.drawable.ic_menu_manage)
@@ -80,7 +86,7 @@ fun MeusGruposScreen(onNavigateToCreate: () -> Unit){
                     }
                 },
                 actions = {
-                    IconButton(onClick = { /* mudar tema */ }) {
+                    IconButton(onClick = {scope.launch { drawerState.open() }  }) {
                         Image(
                             painter = painterResource(id = R.drawable.lua),
                             contentDescription = "Tema",
@@ -88,7 +94,7 @@ fun MeusGruposScreen(onNavigateToCreate: () -> Unit){
                         )
                     }
 
-                    IconButton(onClick = {  }) {
+                    IconButton(onClick = { onThemeToggle }) {
                         Image(
                             painter = painterResource(id = R.drawable.perfil),
                             contentDescription = "Perfil",
@@ -121,7 +127,7 @@ fun MeusGruposScreen(onNavigateToCreate: () -> Unit){
 
                     Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                         Button(
-                            onClick = {},
+                            onClick = {onNavigateToCreate},
                             colors = ButtonDefaults.buttonColors(containerColor = Color.White)
                         ) {
                             Icon(
@@ -150,62 +156,46 @@ fun MeusGruposScreen(onNavigateToCreate: () -> Unit){
                         }
                     }
 
-                        Spacer(Modifier.height(16.dp))
+                    Spacer(Modifier.height(16.dp))
 
-                        LazyColumn(
-                            verticalArrangement = Arrangement.spacedBy(12.dp),
-                            modifier = Modifier.fillMaxSize()
-                        ) {
-                            items(grupos) { grupo ->
-                                Card(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    shape = RoundedCornerShape(12.dp),
-                                    colors = CardDefaults.cardColors(
-                                        containerColor = PrimaryPurple
+                    LazyColumn(
+                        verticalArrangement = Arrangement.spacedBy(12.dp),
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+                        items(grupos) { grupo ->
+                            Card(
+                                modifier = Modifier.fillMaxWidth(),
+                                shape = RoundedCornerShape(12.dp),
+                                colors = CardDefaults.cardColors(
+                                    containerColor = PrimaryPurple
+                                )
+                            ) {
+                                Row(
+                                    modifier = Modifier.padding(16.dp),
+                                    verticalAlignment = Alignment.CenterVertically
+                                ){
+                                    Icon(
+                                        painter = painterResource(id = grupo.icon),
+                                        contentDescription = grupo.nome,
+                                        tint= Color.White,
+                                        modifier = Modifier.size(32.dp)
                                     )
-                                ) {
-                                    Row(
-                                        modifier = Modifier.padding(16.dp),
-                                        verticalAlignment = Alignment.CenterVertically
-                                    ){
-                                        Icon(
-                                            painter = painterResource(id = grupo.icon),
-                                            contentDescription = grupo.nome,
-                                            tint= Color.White,
-                                            modifier = Modifier.size(32.dp)
-                                        )
-                                        Spacer(Modifier.width(12.dp))
-                                        Column {
-                                            Text(grupo.nome, color= Color.White, style = MaterialTheme.typography.titleMedium)
-                                            Text(grupo.membros, color = Color.White.copy(alpha = 0.8f))
-                                        }
+                                    Spacer(Modifier.width(12.dp))
+                                    Column {
+                                        Text(grupo.nome, color= Color.White, style = MaterialTheme.typography.titleMedium)
+                                        Text(grupo.membros, color = Color.White.copy(alpha = 0.8f))
                                     }
                                 }
                             }
                         }
+                    }
                 }
 
 
 
 
 
-                }
             }
         }
-    }
-
-@Preview(showBackground = true, showSystemUi = true, name = "MeusGrupos - Claro")
-@Composable
-fun PreviewMeusGruposLight() {
-    GrupoTheme(darkTheme = false) {
-        MeusGruposScreen(onNavigateToCreate = {})
-    }
-}
-
-@Preview(showBackground = true, showSystemUi = true, name = "MeusGrupos - Escuro")
-@Composable
-fun PreviewMeusGruposDark() {
-    GrupoTheme(darkTheme = true) {
-        MeusGruposScreen(onNavigateToCreate = {})
     }
 }
